@@ -10,14 +10,14 @@ class wizard_precios_proveedores(osv.osv_memory):
 
 	_name = 'precios.proveedores.wizard'
 	_columns = {
-			'proveedor': fields.many2one('res.partner',string='Proveedores',required=False,search=True),
-			'category_id': fields.many2one('product.category',string='Categorias',required=False,search=True),
-			'product_id': fields.many2one('product.product',string='Productos',required=False,search=True),			
-			'average':fields.float("Porcentaje",digits=(3,2)),
-			'all_products':fields.boolean("Todos los productos",help="Marque este campo si desea modificar el precio de todos los productos de todos los proveedores."),
+			'proveedor': fields.many2one('res.partner', string='Proveedores', required=False, search=True),
+			'category_id': fields.many2one('product.category', string='Categorias', required=False, search=True),
+			'product_id': fields.many2one('product.product', string='Productos', required=False, search=True),			
+			'average':fields.float("Porcentaje", digits=(3,2)),
+			'all_products':fields.boolean("Todos los productos", help="Marque este campo si desea modificar el precio de todos los productos de todos los proveedores."),
 			'standard_price':fields.boolean("Precio de venta"),
 			'list_price':fields.boolean("Precio de compra"),
-			'state':fields.selection([('hecho','Finalizado'),('choosing','En proceso'),('choosed-prov','prov elegido'),('choosed-cat','cat elegido'),('choosed-prod','prod elegido')],'Estado',invisible=True)
+			'state':fields.selection([('hecho', 'Finalizado'),('choosing', 'En proceso'),('choosed-prov', 'prov elegido'),('choosed-cat','cat elegido'),('choosed-prod','prod elegido')],'Estado',invisible=True)
 	}
 	
 	_defaults = {
@@ -29,7 +29,7 @@ class wizard_precios_proveedores(osv.osv_memory):
 	}
 	
 	def onchange_suppliers(self,cr,uid,ids,provid):
-		res={}
+		res = {}
 		if provid:
 			res['value'] = {'state':'choosed-prov'}
 		else:
@@ -37,7 +37,7 @@ class wizard_precios_proveedores(osv.osv_memory):
 		return res
 			
 	def onchange_categories(self,cr,uid,ids,catid):
-		res={}
+		res = {}
 		if catid:
 			res['value'] = {'state':'choosed-cat'}
 		else:
@@ -45,7 +45,7 @@ class wizard_precios_proveedores(osv.osv_memory):
 		return res
 		
 	def onchange_products(self,cr,uid,ids,prodid):
-		res={}
+		res = {}
 		if prodid:
 			res['value'] = {'state':'choosed-prod'}
 		else:
@@ -68,8 +68,8 @@ class wizard_precios_proveedores(osv.osv_memory):
 		elif this[0]['proveedor']:
 			provid = this[0]['proveedor'].id
 			productos_proveedor = self.pool.get('product.supplierinfo')
-			productos_proveedor_ids = productos_proveedor.search(cr,uid,[('name','=',provid)])
-			templates = productos_proveedor.read(cr,uid,productos_proveedor_ids,['product_id'])			
+			productos_proveedor_ids = productos_proveedor.search(cr, uid, [('name', '=', provid)])
+			templates = productos_proveedor.read(cr, uid, productos_proveedor_ids, ['product_id'])			
 			for t in templates:
 				tmplids.append(t['product_id'][0])
 		elif this[0]['product_id']:
