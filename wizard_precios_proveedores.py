@@ -81,7 +81,7 @@ class wizard_precios_proveedores(osv.osv_memory):
 		new_price = {}
 		if this[0]['standard_price'] or this[0]['list_price']: 
 			for dic in prices:
-				new_price['id']=dic['id']
+				new_price['id'] = dic['id']
 				if this[0]['standard_price']:
 					new_price['standard_price'] = dic['standard_price']*modificador
 					new_price['list_price'] = dic['list_price']
