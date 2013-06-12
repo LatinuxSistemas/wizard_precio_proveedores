@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+	<record model="ir.ui.view" id="precio_proveedores_wizard_view">
+       	<field name="name">precios.proveedores.wizard.form</field>
+       	<field name="model">precios.proveedores.wizard</field>
+       	<field name="type">form</field>
+		<field name="arch" type="xml">
+	  	<form string="Wizard">
+	  		<separator colspan="4" string="Asistente para modificar precios de productos"/>
+	  		<newline/>					
+	  		<field invisible="1" name="state"/>
+	  		<field name='all_products' colspan="1" string='Aplicar modificacion a todos los productos?' attrs="{'readonly':[('state','in',('choosed-prov','choosed-cat','choosed-prod','hecho'))]}"/>
+			<group col="2" colspan="4">		
+	  			<field name="proveedor" string="Proveedor" widget="selection" attrs="{'readonly':['|',('all_products','=',True),('state','in',('choosed-cat','choosed-prod','hecho'))]}" domain="[('supplier','=',True)]" on_change="onchange_suppliers(proveedor)"/>
+				<field name='category_id' string="Categoria" widget='selection' attrs="{'readonly':['|',('all_products','=',True),('state','in',('choosed-prov','choosed-prod','hecho'))]}" on_change="onchange_categories(category_id)"/>	
+	  			<field name='product_id' string="Producto" widget='selection' attrs="{'readonly':['|',('all_products','=',True),('state','in',('choosed-prov','choosed-cat','hecho'))]}" on_change="onchange_products(product_id)"/>  
+		  	</group>		  		
+	  		<group col="6" colspan="4" rowspan="1">		  		
+				<separator colspan="4"/>
+				<group colspan="5" col="4">
+		  			<field name='list_price' string='Precio de venta' attrs="{'readonly':[('standard_price','=',True)]}"/>				 			  		
+		  			<field name='standard_price' string='Precio de compra' attrs="{'readonly':[('list_price','=',True)]}"/>
+			  	</group>
+			  	<newline/>	
+				<group colspan="1" col="2">
+				  	<field name="average" required="1"/>
+				</group>					
+			</group>	
+			<group col="2" colspan="3" states="choosing,choosed-prov,choosed-cat,choosed-prod">
+            	<button type="action" special="cancel" icon="gtk-cancel" string="Cancelar" />
+            	<button type="object" name="accion" icon="gtk-ok" string="Aceptar" />
+            </group>
+           	<group col="2" colspan="4" states="hecho">
+            	<button type="action" special="cancel" icon="gtk-ok" string="Finalizar"/>
+            </group>
+		</form>
+		</field>
+	</record>
+
+	<record id="precio_proveedores_wizard_action" model="ir.actions.act_window">            
+            <field name="name">Wizard</field>
+            <field name="res_model">precios.proveedores.wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="precio_proveedores_wizard_view"/>
+            <field name="target">new</field>			                    
+    </record>
+
+	<menuitem action="precio_proveedores_wizard_action" id="menu_wizard_precios_latinux" parent="stock.menu_stock_warehouse_mgmt" sequence="10" name="Precios"/>
+
+</data>
+</openerp>
