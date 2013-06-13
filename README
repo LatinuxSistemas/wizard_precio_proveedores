@@ -1,4 +1,2 @@
-wizard_precios_proveedores es un mÃ³dulo para OpenERP que permite aumentar el precio de compra 
-o precio de venta de uno, varios o todos los productos, filtrando por proveedor, categorÃa o
-nombre de producto. Especialmente apto para cuando existen aumentos de precios de un proveedor
+wizard_precios_proveedores es un módulo para OpenERP que permite aumentar el precio de compra o precio de venta de uno, varios o todos los productos, filtrando por proveedor, categoría o nombre de producto. Especialmente apto para cuando existen aumentos de precios de un proveedor
 que afectan a varios productos.
